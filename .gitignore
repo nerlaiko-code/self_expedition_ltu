@@ -10,4 +10,5 @@ build
 # Ignore videos
 *.MOV
 *.mov
-materials/
+*.mp4
+*.MP4
