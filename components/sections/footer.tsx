@@ -1,8 +1,10 @@
 const navLinks = [
   { label: "Apie", href: "#apie" },
+  { label: "Instruktoriai", href: "#instruktoriai" },
   { label: "Veiklos", href: "#veiklos" },
+  { label: "Galerija", href: "/galerija" },
   { label: "D.U.K.", href: "#duk" },
-  { label: "Registracija", href: "#registracija" },
+  { label: "Kontaktai", href: "#footer" },
 ];
 
 export default function Footer() {
@@ -31,8 +33,6 @@ export default function Footer() {
               style={{ color: "var(--ash-dim)" }}
             >
               Perženk savo ribas.
-              <br />
-              Lietuva kaip klasė.
             </p>
           </div>
 
@@ -67,6 +67,7 @@ export default function Footer() {
             >
               Socialiniai tinklai
             </p>
+            <div className="flex flex-col gap-4">
             <a
               href="https://www.instagram.com/self_expedition_ltu/"
               target="_blank"
@@ -99,7 +100,7 @@ export default function Footer() {
               href="https://discord.com/invite/pBXXuGVKV7"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 group mt-4"
+              className="inline-flex items-center gap-3 group"
             >
               {/* Discord icon */}
               <svg
@@ -121,6 +122,7 @@ export default function Footer() {
                 Discord serveris
               </span>
             </a>
+            </div>
           </div>
         </div>
 

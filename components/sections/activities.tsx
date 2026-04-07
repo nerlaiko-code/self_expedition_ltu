@@ -144,7 +144,7 @@ export default function Activities() {
 
                     {/* Flip hint */}
                     <p
-                      className="mt-auto pt-6 font-body text-xs uppercase"
+                      className="absolute bottom-6 left-8 font-body text-xs uppercase"
                       style={{ color: "rgba(200,169,110,0.5)", letterSpacing: "0.12em" }}
                     >
                       Spausk daugiau info →

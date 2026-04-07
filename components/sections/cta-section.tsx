@@ -8,6 +8,29 @@ const CALENDLY_URL = process.env.NEXT_PUBLIC_CALENDLY_URL ?? "";
 
 type FormState = "idle" | "submitting" | "success" | "error";
 
+const PRIVACY_POLICY = `PRIVATUMO POLITIKA
+
+Duomenų valdytojas: Self Expedition
+
+Kokius duomenis renkame:
+Vardą, pavardę, el. pašto adresą ir telefono numerį, kuriuos pateikiate registracijos formoje.
+
+Kam naudojame:
+• Susisiekimui dėl stovyklos organizacinių detalių
+• Informacijos apie stovyklos vietą atskleidimui prieš renginį
+• Naujienlaiškių ir informacijos apie būsimas stovyklas siuntimui (tik gavus jūsų sutikimą)
+
+Teisinis pagrindas:
+Duomenys tvarkomi remiantis jūsų sutikimu (BDAR 6 str. 1 d. a p.).
+
+Saugojimo terminas:
+Duomenys saugomi 2 metus po paskutinio kontakto arba kol atšaukiate sutikimą.
+
+Jūsų teisės:
+Turite teisę bet kada atšaukti sutikimą, prašyti patikslinti, ištrinti arba eksportuoti savo duomenis. Susisiekite: info@selfexpedition.lt
+
+Duomenys neperduodami trečiosioms šalims be jūsų sutikimo.`;
+
 export default function CtaSection() {
   const [form, setForm] = useState({
     name: "",
@@ -17,6 +40,9 @@ export default function CtaSection() {
     activity: "",
   });
   const [status, setStatus] = useState<FormState>("idle");
+  const [consent, setConsent] = useState(false);
+  const [consentError, setConsentError] = useState(false);
+  const [showPolicy, setShowPolicy] = useState(false);
 
   /* Listen for activity pre-selection from the Activities section */
   useEffect(() => {
@@ -34,6 +60,11 @@ export default function CtaSection() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!consent) {
+      setConsentError(true);
+      return;
+    }
+    setConsentError(false);
     setStatus("submitting");
     trackEvent("registration_form_submit", { activity: form.activity });
     try {
@@ -301,14 +332,139 @@ export default function CtaSection() {
               {status === "submitting" ? "SIUNČIAMA..." : "REGISTRUOTIS"}
             </button>
 
-            <p
-              className="text-center mt-4 font-body text-xs"
-              style={{ color: "var(--ash-dim)", letterSpacing: "0.05em" }}
-            >
-              Jūsų duomenys naudojami tik susisiekimui. Vieta — atskleidžiama prieš stovyklą.
-            </p>
+            {/* GDPR consent */}
+            <div className="mt-4">
+              <label
+                style={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  gap: "0.65rem",
+                  cursor: "pointer",
+                }}
+              >
+                <input
+                  type="checkbox"
+                  checked={consent}
+                  onChange={(e) => {
+                    setConsent(e.target.checked);
+                    if (e.target.checked) setConsentError(false);
+                  }}
+                  style={{
+                    marginTop: "0.15rem",
+                    flexShrink: 0,
+                    accentColor: "var(--sand)",
+                    width: "1rem",
+                    height: "1rem",
+                    cursor: "pointer",
+                  }}
+                />
+                <span
+                  style={{
+                    fontFamily: "var(--font-body)",
+                    fontSize: "0.75rem",
+                    letterSpacing: "0.04em",
+                    color: consentError ? "#e07070" : "var(--ash-dim)",
+                    lineHeight: 1.5,
+                  }}
+                >
+                  Sutinku, kad mano duomenys būtų naudojami susisiekimui dėl stovyklos ir galimų naujienlaiškių.{" "}
+                  <button
+                    type="button"
+                    onClick={() => setShowPolicy(true)}
+                    style={{
+                      background: "none",
+                      border: "none",
+                      padding: 0,
+                      color: "var(--sand)",
+                      fontFamily: "var(--font-body)",
+                      fontSize: "0.75rem",
+                      letterSpacing: "0.04em",
+                      cursor: "pointer",
+                      textDecoration: "underline",
+                    }}
+                  >
+                    Privatumo politika
+                  </button>
+                </span>
+              </label>
+              {consentError && (
+                <p
+                  style={{
+                    fontFamily: "var(--font-body)",
+                    fontSize: "0.7rem",
+                    color: "#e07070",
+                    marginTop: "0.4rem",
+                    letterSpacing: "0.04em",
+                  }}
+                >
+                  Prašome patvirtinti sutikimą prieš registruojantis.
+                </p>
+              )}
+            </div>
           </form>
         )}
+
+        {/* Privacy policy modal */}
+        {showPolicy && (
+            <div
+              onClick={() => setShowPolicy(false)}
+              style={{
+                position: "fixed",
+                inset: 0,
+                backgroundColor: "rgba(0,0,0,0.75)",
+                zIndex: 1000,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                padding: "1.5rem",
+              }}
+            >
+              <div
+                onClick={(e) => e.stopPropagation()}
+                style={{
+                  backgroundColor: "#0f150f",
+                  border: "1px solid rgba(200,169,110,0.25)",
+                  maxWidth: "560px",
+                  width: "100%",
+                  maxHeight: "80vh",
+                  overflowY: "auto",
+                  padding: "2rem",
+                  position: "relative",
+                }}
+              >
+                <button
+                  type="button"
+                  onClick={() => setShowPolicy(false)}
+                  style={{
+                    position: "absolute",
+                    top: "1rem",
+                    right: "1rem",
+                    background: "none",
+                    border: "none",
+                    color: "var(--sand)",
+                    fontSize: "1.2rem",
+                    cursor: "pointer",
+                    lineHeight: 1,
+                  }}
+                >
+                  ✕
+                </button>
+                <pre
+                  style={{
+                    fontFamily: "var(--font-body)",
+                    fontSize: "0.78rem",
+                    color: "var(--ash)",
+                    letterSpacing: "0.03em",
+                    lineHeight: 1.75,
+                    whiteSpace: "pre-wrap",
+                    margin: 0,
+                  }}
+                >
+                  {PRIVACY_POLICY}
+                </pre>
+              </div>
+            </div>
+          )}
       </div>
     </section>
   );
