@@ -4,16 +4,44 @@ import { useState } from "react";
 
 const faqs = [
   {
-    q: "Ar reikia fizinio pasiruošimo?",
-    a: "Nebūtina būti sportininku — bet turi norėti judėti. Dauguma mūsų veiklų pritaikytos žmonėms be specialaus sporto pagrindo. Instruktoriai padeda pritaikyti tempą pagal grupę. Tačiau žinok: tai nėra pasivaikščiojimas.",
+    q: "Kiek kainuoja veiklos?",
+    a: "Kaina priklauso nuo žmonių skaičiaus, pasirinktų užsiėmimų ir nuo to, kiek laiko norite skirti veikloms. Susisiekite su mumis ir paruošime individualų pasiūlymą.",
   },
   {
-    q: "Kokia apranga reikalinga?",
-    a: "Patogūs sportiniai ar lauko drabužiai, tvirti batai (geriausia — auliniai). Vasarą — lengva striukė, žiemą — šiltai sluoksniuotis. Pilną aprašą gausi registracijos patvirtinime. Nevenk purvo — jis bus.",
+    q: "Kokiomis progomis galima naudotis jūsų paslaugomis?",
+    a: "Gimtadieniai, uždari renginiai, teambuilding'ai, bernvakariai, mergvakariai ir kitos progos/šventės.",
+  },
+  {
+    q: "Ar veiklas vykdote tik vasarą?",
+    a: "Ne. Veiklas vykdome visais metų laikais!",
+  },
+  {
+    q: "Ar reikia turėti kažkokios patirties norint dalyvauti užsiėmimuose?",
+    a: "Ne. Mūsų veiklos pritaikytos tiek pradedantiesiems tiek pažengusiems. Mūsų instruktorių kompetencija nenuvils net visiškai nieko nemokančio.",
   },
   {
     q: "Kiek žmonių gali dalyvauti?",
-    a: "Maksimalus grupės dydis — 12 žmonių. Tai tikslas: kiekvienas dalyvis gauna instruktoriaus dėmesį ir tikrą patirtį, ne masinio renginio jausmą. Korporatyviniams renginiams galima derinti kelias grupes.",
+    a: "Veiklas organizuojame nuo 1 iki 50 žmonių grupėms arba pagal susitarimą.",
+  },
+  {
+    q: "Kur vyksta jūsų veiklos?",
+    a: "Kaišiadorių raj., bet galime prisitaikyti ir atvykti į jūsų sodybą / lokaciją.",
+  },
+  {
+    q: "Kiek laiko trunka programa?",
+    a: "Pasirinktinai, 2–48 val.",
+  },
+  {
+    q: "Ar suteikiate įrangą?",
+    a: "Taip, visą reikiamą įrangą gausite iš mūsų, jums tereikia turėti patogią aprangą.",
+  },
+  {
+    q: "Ar galite išrašyti sąskaitą faktūrą?",
+    a: "Taip.",
+  },
+  {
+    q: "Ar reikia fizinio pasiruošimo?",
+    a: "Nebūtina būti sportininku — bet turi norėti judėti. Dauguma mūsų veiklų pritaikytos žmonėms be specialaus sporto pagrindo. Instruktoriai padeda pritaikyti tempą pagal grupę. Tačiau žinok: tai nėra pasivaikščiojimas.",
   },
   {
     q: "Ar saugu? Kas atsitinka avariniu atveju?",
@@ -24,16 +52,12 @@ const faqs = [
     a: "Vyksta. Lietuviškas miškas neatsiklaus, koks oras lauke — ir mes irgi ne. Blogos orų sąlygos dažnai daro patirtį stipresnę. Tik tikrai ekstremalūs atvejai (audra, žaibai) gali pakeisti planą — tokiu atveju susitarsime iš anksto.",
   },
   {
-    q: "Kur vyksta veiklos? Reikia transporto?",
-    a: "Lietuva kaip klasė — miškingos vietovės netoli miestų. Tikslią vietą atskleidžiame prieš renginį. Dažniausiai renkamės bendru transportu arba automobiliuose. Koordinuojame su grupe atskirai.",
-  },
-  {
     q: "Ar galiu dovanoti tai kaip dovaną?",
     a: "Taip — ir tai viena geriausių dovanų, kurias galima duoti. Bernvakariams, gimtadieniams, korporatyviniams renginiams. Susisiek su mumis ir paruošime dovanų paketą.",
   },
   {
     q: "Kaip vyksta registracija ir mokėjimas?",
-    a: "Užpildyk registracijos formą — susisieksime per 24 val., suderinsime datą ir detales. Avansinį mokestį surenkami prieš renginį. Vietos ribotos — kuo anksčiau, tuo geriau.",
+    a: "Užpildyk registracijos formą — susisieksime per 24 val., suderinsime datą ir detales. Avansinis mokestis surenkami prieš renginį. Vietos ribotos — kuo anksčiau, tuo geriau.",
   },
 ];
 

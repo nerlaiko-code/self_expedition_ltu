@@ -1,11 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import { activities, BADGE_LABELS, BADGE_COLORS, BADGE_TEXT_COLORS, type Badge } from "@/lib/activities";
 import { trackEvent } from "@/lib/track";
 
 function BadgeChip({ badge }: { badge: Badge }) {
-  const isLegendary = badge === "legendary";
-
   return (
     <span
       className="font-body text-xs uppercase px-3 py-1"
@@ -14,9 +13,6 @@ function BadgeChip({ badge }: { badge: Badge }) {
         backgroundColor: BADGE_COLORS[badge],
         letterSpacing: "0.12em",
         clipPath: "polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px))",
-        boxShadow: isLegendary ? "0 0 12px rgba(200,169,110,0.5)" : "none",
-        animation: isLegendary ? "glow 3s ease-in-out infinite" : "none",
-        border: badge === "classified" ? "1px solid #3d2a5a" : "none",
       }}
     >
       {BADGE_LABELS[badge]}
@@ -25,6 +21,18 @@ function BadgeChip({ badge }: { badge: Badge }) {
 }
 
 export default function Activities() {
+  const [flipped, setFlipped] = useState<string | null>(null);
+
+  const handleCardClick = (id: string) => {
+    setFlipped((prev) => (prev === id ? null : id));
+  };
+
+  const handleRegister = (id: string) => {
+    trackEvent("activity_card_click", { activity: id });
+    window.dispatchEvent(new CustomEvent("se:selectActivity", { detail: id }));
+    document.getElementById("registracija")?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <section
       id="veiklos"
@@ -54,117 +62,154 @@ export default function Activities() {
             className="font-body text-base max-w-sm"
             style={{ color: "var(--ash-dim)", lineHeight: 1.8 }}
           >
-            Kiekviena veikla — atskiras iššūkis. Pasirink, kiek tau sunku. Bet žinok — <span style={{ color: "var(--sand)" }}>lengvo pasirinkimo čia nėra.</span>
+            Kiekviena veikla — atskiras nuotykis. Spausk ant kortelės ir sužinok daugiau.
           </p>
         </div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px" style={{ backgroundColor: "rgba(200,169,110,0.12)" }}>
-          {activities.map((activity, i) => (
-            <button
-              key={activity.id}
-              className="relative group flex flex-col p-8 transition-colors duration-300 overflow-hidden text-left w-full"
-              style={{
-                backgroundColor: "var(--bg)",
-                animationDelay: `${i * 80}ms`,
-                cursor: "pointer",
-                border: "none",
-              }}
-              onClick={() => {
-                trackEvent("activity_card_click", { activity: activity.id });
-                window.dispatchEvent(
-                  new CustomEvent("se:selectActivity", { detail: activity.id })
-                );
-                document.getElementById("registracija")?.scrollIntoView({ behavior: "smooth" });
-              }}
-              aria-label={`Registruotis: ${activity.title}`}
-            >
-              {/* Background image on hover */}
-              {activity.image && (
+        {/* Grid — 3-4-4 on desktop, 2-col on tablet, 1-col on mobile */}
+        <div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-px"
+          style={{ backgroundColor: "rgba(200,169,110,0.12)" }}
+        >
+          {activities.map((activity, index) => {
+            const isFlipped = flipped === activity.id;
+            // First 3 items span 4 of 12 cols (3×4=12), rest span 3 (4×3=12)
+            const colSpan = index < 3 ? "lg:col-span-4" : "lg:col-span-3";
+            return (
+              <div
+                key={activity.id}
+                className={`relative col-span-1 sm:col-span-1 ${colSpan}`}
+                style={{ perspective: "1000px", minHeight: "320px" }}
+              >
+                {/* Flip container */}
                 <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                  className="relative w-full h-full"
                   style={{
-                    backgroundImage: `url(${activity.image})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    filter: "brightness(0.2) saturate(0.6)",
+                    transformStyle: "preserve-3d",
+                    transition: "transform 0.55s ease",
+                    transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
+                    minHeight: "320px",
                   }}
-                />
-              )}
-
-              {/* Hover tint overlay */}
-              <div
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                style={{ backgroundColor: "rgba(45,74,30,0.12)" }}
-              />
-
-              {/* Icon */}
-              <div
-                className="relative mb-6 w-12 h-12 flex items-center justify-center transition-colors duration-300"
-                style={{
-                  border: `1px solid ${BADGE_COLORS[activity.badge]}50`,
-                }}
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  className="w-6 h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={1.5}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  style={{ color: BADGE_COLORS[activity.badge] }}
                 >
-                  <path d={activity.icon} />
-                </svg>
+                  {/* FRONT */}
+                  <button
+                    className="absolute inset-0 flex flex-col p-8 text-left w-full cursor-pointer"
+                    style={{
+                      backgroundColor: "var(--bg)",
+                      backfaceVisibility: "hidden",
+                      WebkitBackfaceVisibility: "hidden",
+                      border: "none",
+                    }}
+                    onClick={() => handleCardClick(activity.id)}
+                    aria-label={`Sužinoti daugiau: ${activity.title}`}
+                  >
+                    {/* Icon */}
+                    <div
+                      className="mb-6 w-12 h-12 flex items-center justify-center shrink-0"
+                      style={{
+                        border: `1px solid ${BADGE_COLORS[activity.badge]}50`,
+                      }}
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        className="w-6 h-6"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        style={{ color: BADGE_COLORS[activity.badge] }}
+                        dangerouslySetInnerHTML={{ __html: activity.icon }}
+                      />
+                    </div>
+
+                    {/* Badge */}
+                    <div className="mb-4">
+                      <BadgeChip badge={activity.badge} />
+                    </div>
+
+                    {/* Title */}
+                    <h3
+                      className="font-display text-3xl mb-3"
+                      style={{ color: "var(--ash)", letterSpacing: "0.06em" }}
+                    >
+                      {activity.title}
+                    </h3>
+                    <p
+                      className="font-body text-sm leading-relaxed"
+                      style={{ color: "var(--ash-dim)" }}
+                    >
+                      {activity.subtitle}
+                    </p>
+
+                    {/* Flip hint */}
+                    <p
+                      className="mt-auto pt-6 font-body text-xs uppercase"
+                      style={{ color: "rgba(200,169,110,0.5)", letterSpacing: "0.12em" }}
+                    >
+                      Spausk daugiau info →
+                    </p>
+                  </button>
+
+                  {/* BACK */}
+                  <div
+                    className="absolute inset-0 flex flex-col p-8"
+                    style={{
+                      backgroundColor: "var(--bg-elevated)",
+                      backfaceVisibility: "hidden",
+                      WebkitBackfaceVisibility: "hidden",
+                      transform: "rotateY(180deg)",
+                      borderLeft: `2px solid ${BADGE_COLORS[activity.badge]}40`,
+                    }}
+                  >
+                    {/* Badge on back */}
+                    <div className="mb-4">
+                      <BadgeChip badge={activity.badge} />
+                    </div>
+
+                    <h3
+                      className="font-display text-2xl mb-4"
+                      style={{ color: "var(--ash)", letterSpacing: "0.06em" }}
+                    >
+                      {activity.title}
+                    </h3>
+
+                    <p
+                      className="font-body text-base leading-relaxed flex-1"
+                      style={{ color: "var(--ash-dim)" }}
+                    >
+                      {activity.description}
+                    </p>
+
+                    <div className="flex gap-3 mt-6">
+                      <button
+                        className="cta-btn flex-1"
+                        style={{ padding: "0.6rem 1rem", fontSize: "0.85rem" }}
+                        onClick={() => handleRegister(activity.id)}
+                      >
+                        Gauti pasiūlymą
+                      </button>
+                      <button
+                        className="cta-btn-ghost"
+                        style={{ padding: "0.6rem 1rem", fontSize: "0.85rem" }}
+                        onClick={() => handleCardClick(activity.id)}
+                      >
+                        ←
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
-
-              {/* Badge */}
-              <div className="relative mb-4">
-                <BadgeChip badge={activity.badge} />
-              </div>
-
-              {/* Title */}
-              <h3
-                className="relative font-display text-3xl mb-1 group-hover:text-sand transition-colors duration-200"
-                style={{ color: "var(--ash)", letterSpacing: "0.06em" }}
-              >
-                {activity.title}
-              </h3>
-              <p
-                className="relative font-body text-xs uppercase tracking-wide mb-4"
-                style={{ color: "var(--ash-dim)", letterSpacing: "0.15em" }}
-              >
-                {activity.subtitle}
-              </p>
-
-              {/* Description */}
-              <p
-                className="relative font-body text-base leading-relaxed mt-auto"
-                style={{ color: "var(--ash-dim)" }}
-              >
-                {activity.description}
-              </p>
-
-              {/* Corner accent */}
-              <div
-                className="absolute bottom-0 right-0 w-6 h-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                style={{
-                  borderTop: `1px solid ${BADGE_COLORS[activity.badge]}`,
-                  borderLeft: `1px solid ${BADGE_COLORS[activity.badge]}`,
-                  transform: "rotate(180deg)",
-                }}
-              />
-            </button>
-          ))}
+            );
+          })}
         </div>
 
-        {/* Click hint */}
+        {/* Hint */}
         <p
           className="font-body text-xs uppercase mt-6 text-center"
           style={{ color: "var(--ash-dim)", letterSpacing: "0.15em", opacity: 0.6 }}
         >
-          ↑ Spausk ant veiklos — ir pereisi tiesiai prie registracijos
+          ↑ Spausk ant veiklos — sužinok daugiau ir registruokis
         </p>
       </div>
     </section>

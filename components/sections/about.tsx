@@ -21,28 +21,26 @@ export default function About() {
             / / &nbsp; Apie mus
           </p>
           <h2
-            className="font-display text-6xl md:text-8xl mb-8"
+            className="font-display text-5xl md:text-7xl mb-8"
             style={{ color: "var(--ash)", letterSpacing: "0.06em" }}
           >
-            NE TRENIRUOČIŲ
+            ORGANIZUOJAME
             <br />
-            <span style={{ color: "var(--sand)" }}>SALA.</span>
+            <span style={{ color: "var(--sand)" }}>AKTYVIAS FIZINES</span>
             <br />
-            TIKRAS
-            <br />
-            <span style={{ color: "var(--olive-bright)" }}>MIŠKAS.</span>
+            VEIKLAS GAMTOJE
           </h2>
           <p
             className="font-body text-lg leading-relaxed mb-6"
             style={{ color: "var(--ash-dim)" }}
           >
-            Self Expedition — tai ne turistinis maršrutas ir ne komforto zona. Mes kuriame situacijas, kuriose atsiskleidžia tikrasis žmogus: sprendimų greitis, bendradarbiavimas, fizinė ir psichinė ištvermė.
+            Orientacinio žygio mokymai, išgyvenimas ekstremaliose situacijose, pirmoji pagalba, nusileidimai nuo tilto, šaudymai su įvairiais ginklais, nelaisvės išgyvenimo mokymai.
           </p>
           <p
             className="font-body text-lg leading-relaxed"
             style={{ color: "var(--ash-dim)" }}
           >
-            Lietuva turi daugiau miško nei daugelis gali įsivaizduoti. Mes žinome, kur jis tankiausias — ir tai yra jūsų arena.
+            Visi instruktoriai su realia patirtimi — buvę snaiperiai, žvalgai, spec. operacijų kariai. Mūsų instruktoriai sudėlios programą, kuri atitiks jūsų grupės tikslą — ar tai būtų komandiškumo stiprinimas, ištvermės išbandymas, ar tiesiog kokybiškai praleistas laikas gamtoje.
           </p>
 
           {/* Divider with accent */}

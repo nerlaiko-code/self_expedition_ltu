@@ -36,10 +36,18 @@ export default function CtaSection() {
     e.preventDefault();
     setStatus("submitting");
     trackEvent("registration_form_submit", { activity: form.activity });
-    // TODO: replace with real API endpoint / email service
-    await new Promise((r) => setTimeout(r, 900));
-    trackLead({ activity: form.activity });
-    setStatus("success");
+    try {
+      const res = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error("Request failed");
+      trackLead({ activity: form.activity });
+      setStatus("success");
+    } catch {
+      setStatus("error");
+    }
   };
 
   const inputStyle: React.CSSProperties = {
@@ -106,13 +114,6 @@ export default function CtaSection() {
             <br />
             <span style={{ color: "var(--sand)" }}>VEIKTI.</span>
           </h2>
-          <p
-            className="font-body text-xl max-w-xl mx-auto"
-            style={{ color: "var(--ash-dim)", lineHeight: 1.8 }}
-          >
-            Kiekviena grupė — maks. 12 žmonių. Vietos užsiima greitai. Nesitikėk, kad rytoj dar bus.
-          </p>
-
           {/* Calendly shortcut */}
           {CALENDLY_URL && (
             <p
@@ -132,6 +133,14 @@ export default function CtaSection() {
         </div>
 
         {/* Form */}
+        {status === "error" && (
+          <p
+            className="text-center font-body text-sm mb-6 py-3 px-4"
+            style={{ color: "#e05c5c", border: "1px solid rgba(224,92,92,0.3)", backgroundColor: "rgba(224,92,92,0.05)" }}
+          >
+            Klaida siunčiant. Bandykite dar kartą arba susisiekite tiesiogiai.
+          </p>
+        )}
         {status === "success" ? (
           <div
             className="text-center py-16 px-8"

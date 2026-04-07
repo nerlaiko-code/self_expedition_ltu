@@ -22,7 +22,7 @@ export default function Hero() {
       <div
         className="absolute inset-0 -z-10"
         style={{
-          backgroundImage: "url('/materials/foto-1-12.jpg')",
+          backgroundImage: "url('/materials/Pagrindine.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center 40%",
           filter: "contrast(1.2) brightness(0.38) saturate(0.5)",
@@ -73,11 +73,9 @@ export default function Hero() {
         {/* Sub-headline */}
         <p
           className="font-display text-2xl md:text-4xl mb-10 max-w-2xl"
-          style={{ color: "var(--ash-dim)", letterSpacing: "0.08em" }}
+          style={{ color: "var(--ash)", letterSpacing: "0.08em" }}
         >
-          PERŽENK SAVO RIBAS.
-          <br />
-          <span style={{ color: "var(--ash)" }}>IŠMOK. IŠGYVEK. STIPRĖK.</span>
+          STIPRIAUSIA PATIRTIS TAVO KOMPANIJAI
         </p>
 
         {/* Body text */}
@@ -85,7 +83,7 @@ export default function Hero() {
           className="font-body text-lg md:text-xl max-w-xl mb-12 leading-relaxed"
           style={{ color: "var(--ash-dim)" }}
         >
-          Taktinės išgyvenimo stovyklos, šaudymas, žygiai ir komandinis ugdymas — ne simuliacija, o realybė. Lietuva kaip klasė.
+          Bernvakariai, gimtadieniai, teambuilding'ai — išgyvenimo iššūkiai, šaudymas, orientaciniai žygiai ir realios situacijos gamtoje.
         </p>
 
         {/* CTA group */}
@@ -97,7 +95,7 @@ export default function Hero() {
             onClick={() => trackEvent("hero_cta_click")}
           >
             <TextScramble
-              text="REGISTRUOTIS"
+              text="GAUTI PASIŪLYMĄ"
               triggerKey={triggerKey}
               className="font-display text-xl tracking-military"
             />
@@ -110,6 +108,12 @@ export default function Hero() {
             Veiklos
           </a>
         </div>
+        <p
+          className="font-body text-sm mt-3"
+          style={{ color: "var(--ash-dim)", letterSpacing: "0.05em" }}
+        >
+          Programa derinama pagal jus
+        </p>
       </div>
 
       {/* Stats strip */}
@@ -119,8 +123,8 @@ export default function Hero() {
       >
         <div className="max-w-7xl mx-auto px-6 py-5 grid grid-cols-2 md:grid-cols-4 gap-6">
           {[
-            { value: "200+", label: "Dalyviai" },
-            { value: "6", label: "Veiklų tipai" },
+            { value: ">400", label: "Dalyvių" },
+            { value: ">15", label: "Profesionalių instruktorių" },
             { value: "100%", label: "Lauke, ne salėje" },
             { value: "0", label: "Nuobodžių dienų" },
           ].map((stat) => (

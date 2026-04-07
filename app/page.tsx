@@ -1,6 +1,7 @@
 import Nav from "@/components/nav";
 import Hero from "@/components/sections/hero";
 import About from "@/components/sections/about";
+import Instructors from "@/components/sections/instructors";
 import Activities from "@/components/sections/activities";
 import SocialProof from "@/components/sections/social-proof";
 import Duk from "@/components/sections/duk";
@@ -14,6 +15,7 @@ export default function Home() {
       <Nav />
       <Hero />
       <About />
+      <Instructors />
       <Activities />
       <SocialProof />
       <Duk />
