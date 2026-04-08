@@ -176,12 +176,12 @@ export default function Activities() {
 
                     <p
                       className="font-body text-base leading-relaxed flex-1"
-                      style={{ color: "var(--ash-dim)" }}
+                      style={{ color: "var(--ash-dim)", minHeight: 0, overflowY: "auto" }}
                     >
                       {activity.description}
                     </p>
 
-                    <div className="flex gap-3 mt-6">
+                    <div className="flex gap-3 mt-4 shrink-0">
                       <button
                         className="cta-btn flex-1"
                         style={{ padding: "0.6rem 1rem", fontSize: "0.85rem" }}

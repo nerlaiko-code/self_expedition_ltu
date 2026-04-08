@@ -1,3 +1,5 @@
+"use client";
+
 const posts = [
   { id: 1, src: "/materials/foto-1-5.jpg", caption: "Žygis per sniegą", type: "image" },
   { id: 2, src: "/materials/copy_CECF4970-587C-41EF-9C7A-1F68C86D6FA3.mp4", caption: "Kovinis šaudymas", type: "video" },
@@ -206,19 +208,22 @@ export default function SocialProof() {
                 {post.type === "video" ? (
                   <video
                     src={post.src}
-                    autoPlay
                     muted
                     loop
                     playsInline
+                    preload="metadata"
+                    onMouseEnter={e => (e.currentTarget as HTMLVideoElement).play()}
+                    onMouseLeave={e => { const v = e.currentTarget as HTMLVideoElement; v.pause(); v.currentTime = 0; }}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    style={{ filter: "contrast(1.1) brightness(0.75) saturate(0.85)" }}
+                    style={{ filter: "contrast(1.1) brightness(0.75) saturate(0.85)", willChange: "transform" }}
                   />
                 ) : (
                   <img
                     src={post.src}
                     alt={post.caption}
+                    loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    style={{ filter: "contrast(1.1) brightness(0.75) saturate(0.85)" }}
+                    style={{ filter: "contrast(1.1) brightness(0.75) saturate(0.85)", willChange: "transform" }}
                   />
                 )}
                 <div
