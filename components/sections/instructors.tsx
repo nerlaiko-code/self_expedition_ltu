@@ -1,25 +1,49 @@
-const placeholders = [
+"use client";
+
+import { useState } from "react";
+
+const instructors = [
   {
     id: 1,
-    name: "Instruktorius — [Vardas]",
-    role: "[Specialybė: pvz. Buvęs snaiperiai]",
-    bio: "[Aprašymas bus pridėtas netrukus]",
+    callsign: "ČEKAS",
+    service: "11 metų tarnybos · 7 metai snaiperių būryje",
+    courses:
+      "Taiklaus šaulio, snaiperio, kovinės savigynos, plaukimo instruktoriaus, skyriaus vado, lyderystės kursai.",
+    internal: "Motorizuotos žvalgybos kursas.",
+    photo: "/materials/Instruktoriai/cekas.jpeg",
   },
   {
     id: 2,
-    name: "Instruktorius — [Vardas]",
-    role: "[Specialybė: pvz. Buvęs žvalgas]",
-    bio: "[Aprašymas bus pridėtas netrukus]",
+    callsign: "EDZIA",
+    service: "7 metai tarnybos žvalgyboje · 1 metai snaiperių būryje",
+    courses:
+      "Pradinio patrulio, taikliojo šaulio, Patrulio, TCCC (taktinės medicinos), kopimo-nusileidimo, aukštesniojo lygio taktinių šuolių parašiutu kursai. Planavimas, taktika ir plaukimas — stipriosios kario pusės.",
+    internal: "Motorizuotos žvalgybos kursas.",
+    photo: "/materials/Instruktoriai/edzia.jpg",
   },
   {
     id: 3,
-    name: "Instruktorius — [Vardas]",
-    role: "[Specialybė: pvz. Spec. operacijų karys]",
-    bio: "[Aprašymas bus pridėtas netrukus]",
+    callsign: "MILKĖ",
+    service: "9 metai tarnybos · 7 metai snaiperių būryje",
+    courses:
+      "Snaiperio, taikliojo šaulio, pistoleto valdymo, skyriaus vado, lyderystės, parašiutizmo kursai.",
+    internal: "Bazinių sprogdinimo darbų, Close Air Support, motorizuotos žvalgybos kursai.",
+    photo: "/materials/Instruktoriai/milke.jpg",
+  },
+  {
+    id: 4,
+    callsign: "STIKLAS",
+    service: "7 metai žvalgybos būryje",
+    courses:
+      "Pradinis žvalgo kursas, motorizuota žvalgyba, parašiutizmo, žvalgo vado, kopimo nusileidimo kursai.",
+    internal: null,
+    photo: "/materials/Instruktoriai/stiklas.jpg",
   },
 ];
 
 export default function Instructors() {
+  const [activeId, setActiveId] = useState<number | null>(null);
+
   return (
     <section
       id="instruktoriai"
@@ -59,68 +83,102 @@ export default function Instructors() {
 
         {/* Cards grid */}
         <div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px"
+          className="grid grid-cols-2 lg:grid-cols-4 gap-px"
           style={{ backgroundColor: "rgba(200,169,110,0.12)" }}
         >
-          {placeholders.map((person) => (
-            <div
-              key={person.id}
-              className="flex flex-col"
-              style={{ backgroundColor: "var(--bg-elevated)" }}
-            >
-              {/* Image placeholder */}
+          {instructors.map((person) => {
+            const isActive = activeId === person.id;
+            return (
               <div
-                className="relative w-full aspect-square flex items-center justify-center overflow-hidden"
-                style={{
-                  backgroundColor: "rgba(255,255,255,0.03)",
-                  borderBottom: "1px solid rgba(200,169,110,0.12)",
-                }}
+                key={person.id}
+                className="relative overflow-hidden cursor-pointer select-none"
+                style={{ aspectRatio: "3 / 4", backgroundColor: "var(--bg-elevated)" }}
+                onMouseEnter={() => setActiveId(person.id)}
+                onMouseLeave={() => setActiveId(null)}
+                onClick={() => setActiveId(isActive ? null : person.id)}
               >
-                {/* Person silhouette SVG */}
-                <svg
-                  viewBox="0 0 80 80"
-                  className="w-24 h-24"
-                  fill="none"
-                  style={{ opacity: 0.15 }}
-                >
-                  <circle cx="40" cy="28" r="16" fill="currentColor" style={{ color: "var(--sand)" }} />
-                  <path
-                    d="M8 72c0-17.673 14.327-32 32-32s32 14.327 32 32"
-                    fill="currentColor"
-                    style={{ color: "var(--sand)" }}
-                  />
-                </svg>
-                <p
-                  className="absolute bottom-4 font-body text-xs uppercase text-center"
-                  style={{ color: "rgba(200,169,110,0.4)", letterSpacing: "0.15em" }}
-                >
-                  Nuotrauka bus pridėta
-                </p>
-              </div>
+                {/* Photo */}
+                <img
+                  src={person.photo}
+                  alt={person.callsign}
+                  className="absolute inset-0 w-full h-full object-cover"
+                  style={{ filter: "contrast(1.1) brightness(0.75) saturate(0.7)" }}
+                />
 
-              {/* Info */}
-              <div className="p-8">
-                <h3
-                  className="font-display text-2xl mb-1"
-                  style={{ color: "var(--ash)", letterSpacing: "0.06em" }}
+                {/* Always-visible bottom bar */}
+                <div
+                  className="absolute bottom-0 left-0 right-0 px-5 pb-5 pt-16"
+                  style={{
+                    background: "linear-gradient(to top, rgba(10,10,8,0.92) 0%, transparent 100%)",
+                    transition: "opacity 300ms ease",
+                    opacity: isActive ? 0 : 1,
+                  }}
                 >
-                  {person.name}
-                </h3>
-                <p
-                  className="font-body text-xs uppercase mb-4"
-                  style={{ color: "var(--sand)", letterSpacing: "0.15em" }}
+                  <h3
+                    className="font-display text-xl md:text-2xl"
+                    style={{ color: "var(--ash)", letterSpacing: "0.08em" }}
+                  >
+                    {person.callsign}
+                  </h3>
+                  <p
+                    className="font-body text-xs mt-1"
+                    style={{ color: "var(--sand)", letterSpacing: "0.1em", lineHeight: 1.6 }}
+                  >
+                    {person.service}
+                  </p>
+                </div>
+
+                {/* Slide-up bio overlay */}
+                <div
+                  className="absolute inset-0 flex flex-col justify-end px-5 pb-5 pt-8"
+                  style={{
+                    backgroundColor: "rgba(10,10,8,0.93)",
+                    transform: isActive ? "translateY(0)" : "translateY(100%)",
+                    transition: "transform 420ms cubic-bezier(0.32, 0, 0.2, 1)",
+                    borderTop: "1px solid rgba(200,169,110,0.2)",
+                  }}
                 >
-                  {person.role}
-                </p>
-                <p
-                  className="font-body text-base leading-relaxed"
-                  style={{ color: "var(--ash-dim)" }}
-                >
-                  {person.bio}
-                </p>
+                  <h3
+                    className="font-display text-xl md:text-2xl mb-1"
+                    style={{ color: "var(--ash)", letterSpacing: "0.08em" }}
+                  >
+                    {person.callsign}
+                  </h3>
+                  <p
+                    className="font-body text-xs mb-4"
+                    style={{ color: "var(--sand)", letterSpacing: "0.1em", lineHeight: 1.6 }}
+                  >
+                    {person.service}
+                  </p>
+                  <div
+                    className="w-6 mb-4"
+                    style={{ height: "1px", backgroundColor: "rgba(200,169,110,0.35)" }}
+                  />
+                  <p
+                    className="font-body text-sm leading-relaxed mb-3"
+                    style={{ color: "var(--ash-dim)" }}
+                  >
+                    {person.courses}
+                  </p>
+                  {person.internal && (
+                    <p
+                      className="font-body text-xs"
+                      style={{ color: "rgba(200,169,110,0.6)", letterSpacing: "0.05em" }}
+                    >
+                      Vidiniai: {person.internal}
+                    </p>
+                  )}
+                  {/* Mobile close hint */}
+                  <p
+                    className="font-body text-xs mt-4 lg:hidden"
+                    style={{ color: "rgba(200,169,110,0.35)", letterSpacing: "0.1em" }}
+                  >
+                    ✕ palieskite, norėdami uždaryti
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
