@@ -19,7 +19,7 @@ function isRateLimited(ip: string): boolean {
   return false;
 }
 
-const NOTIFICATION_EMAIL = "funk332@gmail.com";
+const NOTIFICATION_EMAIL = "selfexpeditionltu@gmail.com";
 
 interface LeadData {
   name: string;
