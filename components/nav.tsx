@@ -42,7 +42,7 @@ export default function Nav() {
           aria-label="Self Expedition — pagrindinis puslapis"
         >
           <img
-            src="/materials/498297466_17859448140418422_4242046198524671559_n.jpg"
+            src="/materials/logo%20SELTU.png"
             alt="Self Expedition logo"
             className="w-10 h-10 object-contain rounded-sm transition-opacity duration-200 group-hover:opacity-80"
             style={{ filter: "drop-shadow(0 0 6px rgba(200,169,110,0.3))" }}
