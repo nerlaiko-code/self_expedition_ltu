@@ -15,9 +15,12 @@ export function trackEvent(
     (window as any).dataLayer.push({ event: eventName, ...params });
   }
 
-  // GA4 direct gtag
+  // GA4 direct gtag — send_to bypasses GTM tag routing and goes straight to GA4
   if (typeof (window as any).gtag === "function") {
-    (window as any).gtag("event", eventName, params ?? {});
+    (window as any).gtag("event", eventName, {
+      ...(params ?? {}),
+      send_to: process.env.NEXT_PUBLIC_GA4_ID,
+    });
   }
 
   // Meta Pixel custom event
