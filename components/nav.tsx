@@ -66,7 +66,7 @@ export default function Nav() {
             className="cta-btn-ghost text-sm"
             style={{ padding: "0.5rem 1.5rem", fontSize: "0.9rem" }}
           >
-            Registruotis
+            Gauti Pasiūlymą
           </a>
         </nav>
 
@@ -124,7 +124,7 @@ export default function Nav() {
             className="cta-btn text-center"
             style={{ fontSize: "1rem" }}
           >
-            Registruotis
+            Gauti Pasiūlymą
           </a>
         </div>
       )}

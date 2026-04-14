@@ -153,7 +153,7 @@ export default function Activities() {
                       className="font-body text-xs uppercase mt-4 shrink-0"
                       style={{ color: "rgba(200,169,110,0.5)", letterSpacing: "0.12em" }}
                     >
-                      Spausk daugiau info →
+                      Daugiau info →
                     </p>
                   </button>
 

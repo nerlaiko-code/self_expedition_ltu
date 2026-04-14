@@ -156,7 +156,7 @@ export default function GalerijaPage() {
             className="font-body text-lg mb-8"
             style={{ color: "var(--ash-dim)" }}
           >
-            Užsiregistruok ir sukurk savo atsiminimai.
+            Gauk pasiūlymą ir pradėk kurti savo nuotykį.
           </p>
           <GalleryCta />
         </div>
