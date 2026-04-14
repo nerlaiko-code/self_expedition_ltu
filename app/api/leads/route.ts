@@ -98,7 +98,9 @@ export async function POST(req: NextRequest) {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
   if (siteUrl) {
     const origin = req.headers.get("origin") ?? "";
-    if (!origin.startsWith(siteUrl)) {
+    const siteHost = new URL(siteUrl).hostname.replace(/^www\./, "");
+    const originHost = (() => { try { return new URL(origin).hostname.replace(/^www\./, ""); } catch { return ""; } })();
+    if (!originHost || originHost !== siteHost) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
   }
