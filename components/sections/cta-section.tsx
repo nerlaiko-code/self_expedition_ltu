@@ -415,7 +415,7 @@ export default function CtaSection() {
                 value={form.comments}
                 onChange={handleChange}
                 rows={4}
-                placeholder="pavyzdžiui: komandos dydis, veiklos trukmė, biudžetas"
+                placeholder="pavyzdžiui: komandos dydis, veiklos trukmė, biudžetas, patogi lokacija, data"
                 style={{
                   ...inputStyle,
                   resize: "vertical",

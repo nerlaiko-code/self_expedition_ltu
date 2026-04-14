@@ -104,7 +104,7 @@ export const activities: Activity[] = [
   },
   {
     id: "bernvakaris",
-    title: "Bernvakaris",
+    title: "Bernvakaris / Mergvakaris",
     subtitle: "Ne vakarėlis – istorija, kurią prisiminsit visą gyvenimą.",
     description:
       "Miškas, ugnis, išbandymai ir patirtys, kurios suartina. Tikras bernvakaris be klišių.",

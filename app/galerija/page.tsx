@@ -19,7 +19,7 @@ const allPhotos = [
   { id: 9, src: "/materials/IMG_5665.JPG", caption: "Ugnies kūrimas", type: "image" },
   { id: 10, src: "/materials/IMG_2435.JPG", caption: "Stovykla miške", type: "image" },
   { id: 11, src: "/materials/IMG_2868.JPG", caption: "Šaudymas", type: "image" },
-  { id: 12, src: "/materials/IMG_3112.JPG", caption: "Bernvakaris", type: "image" },
+  { id: 12, src: "/materials/IMG_3112.JPG", caption: "Bernvakaris / Mergvakaris", type: "image" },
   { id: 13, src: "/materials/IMG_3410.JPG", caption: "Komandinis darbas", type: "image" },
   { id: 14, src: "/materials/foto-1-10.jpg", caption: "Žygis gamtoje", type: "image" },
   { id: 15, src: "/materials/IMG_4530.mp4", caption: "Veiklos gamtoje", type: "video" },
