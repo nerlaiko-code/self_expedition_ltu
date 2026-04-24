@@ -20,7 +20,8 @@
       "Bash(powershell.exe -Command \"Stop-Process -Id \\(Get-NetTCPConnection -LocalPort 3000 -ErrorAction SilentlyContinue\\).OwningProcess -Force -ErrorAction SilentlyContinue\")",
       "Bash(npx tsc:*)",
       "Bash(npm run:*)",
-      "Bash(netstat -ano)"
+      "Bash(netstat -ano)",
+      "Bash(node --env-file=.env.local scripts/setup-sheet.mjs)"
     ]
   }
 }
